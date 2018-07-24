@@ -1,27 +1,30 @@
 const {MongoClient} = require('mongodb')
+let db
+const env = {
+  uri: process.env.MONGODB_URI,
+  dbName: process.env.MONGODB_DBNAME
+}
 
-const MongoDb = {
-  db: undefined,
-  config: {
-    uri: process.env.MONGODB_URI,
-    dbName: process.env.MONGODB_DBNAME
-  },
-  connect: async () => {
-    if (MongoDb.db) return MongoDb.db
+class MongoDb {
+  constructor () {
+    if (db) return db
+    else return this.connect()
+  }
+  async connect () {
     try {
-      const client = await MongoClient.connect(MongoDb.config.uri, { useNewUrlParser: true })
-      const dbConnection = client.db(MongoDb.config.dbName)
-      await MongoDb.ensureIndexes()
+      const client = await MongoClient.connect(env.uri, { useNewUrlParser: true })
+      const dbConnection = client.db(env.dbName)
+      this.ensureIndexes()
 
-      MongoDb.db = dbConnection
-      return MongoDb.db
+      db = dbConnection
+      return db
     } catch (err) {
       throw err
     }
-  },
-  ensureIndexes: () => {
+  }
+  ensureIndexes () {
 
   }
 }
 
-module.exports = MongoDb.connect
+module.exports = MongoDb
