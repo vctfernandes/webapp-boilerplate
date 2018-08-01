@@ -1,9 +1,8 @@
-const Passport = require('./passport')
+const passport = require('./passport')
+const User = require('../user')
 
-class Authentication {
-  constructor () {
-    this.passport = new Passport()
+module.exports = () => {
+  return {
+    passport: passport({ User })
   }
 }
-
-module.exports = Authentication

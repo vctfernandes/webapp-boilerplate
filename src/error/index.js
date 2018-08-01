@@ -1,4 +1,4 @@
-const Db = require('@local/src/database')
+const Db = require('../database')
 
 class ErrorHandler {}
 

@@ -1,22 +1,26 @@
 const express = require('express')
 const path = require('path')
-const passport = require('passport')
+const auth = require('../authentication')({ User: {} })
 const serveStatic = require('serve-static')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 class Router {
   constructor () {
-    this.app = express()
-    this.app.use(serveStatic(path.resolve(__dirname, '../../public')))
-    this.app.use(cookieParser())
-    this.app.use(bodyParser.urlencoded({ extended: true }))
-    this.app.use(session({ secret: process.env.EXPRESS_SECRET, resave: true, saveUninitialized: true }))
-    this.app.use(passport.initialize())
-    this.app.use(passport.session())
+    this.router = express()
+    this.router.set('views', path.resolve(__dirname, '../views'))
 
-    this.app.use('/', require('./root'))
-    this.app.use('/auth', require('./authentication'))
+    this.router.use(serveStatic(path.resolve(__dirname, '../../public')))
+    this.router.use(cookieParser())
+    this.router.use(bodyParser.urlencoded({ extended: true }))
+    this.router.use(session({ secret: process.env.EXPRESS_SECRET, resave: true, saveUninitialized: true }))
+    this.router.use(auth.passport.initialize())
+    this.router.use(auth.passport.session())
+
+    this.router.use('/', require('./root'))
+    this.router.use('/auth', require('./authentication'))
+
+    this.router.listen(process.env.PORT)
   }
 }
 
