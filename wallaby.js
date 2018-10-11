@@ -1,7 +1,7 @@
 module.exports = function () {
   return {
     files: [
-      {pattern: '/.env', instrument: false},
+      { pattern: '/.env', instrument: false },
       '.env.example',
       './index.js',
       '/src/**/*'

@@ -1,7 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 
-module.exports = ({User}) => {
+module.exports = ({ User }) => {
   passport.use(new LocalStrategy(
     async (username, password, done) => {
       try {

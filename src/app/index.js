@@ -1,5 +1,5 @@
 class App {
-  constructor ({Db, Router}) {
+  constructor ({ Db, Router }) {
     Object.assign(this, arguments[0])
   }
 

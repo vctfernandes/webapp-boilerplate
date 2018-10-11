@@ -37,6 +37,7 @@ describe('database: ', () => {
     expect.assertions(1)
 
     await new Database()
+    await Database.close()
 
     await expect(Database.close({ uri: 'mongodb://255.255.255.255:255' })).rejects.toThrow()
   })
@@ -49,7 +50,7 @@ describe('database: ', () => {
   test('run collection shortcut commands and try a bunch of operations', async () => {
     const db = await new Database()
     await db.testCollection.insertOne({ test: true })
-    await db.testCollection.updateOne({ test: true }, {$set: {updated: true}})
+    await db.testCollection.updateOne({ test: true }, { $set: { updated: true } })
     const doc = await db.testCollection.findOne({ test: true })
     expect(doc).toMatchObject({
       test: true,

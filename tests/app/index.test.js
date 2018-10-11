@@ -6,7 +6,7 @@ describe('app:', () => {
   test('starts correctly', async () => {
     expect.assertions(1)
 
-    const app = new App({Db, Router})
+    const app = new App({ Db, Router })
     await app.start()
     expect(app).toBeInstanceOf(App)
   })
